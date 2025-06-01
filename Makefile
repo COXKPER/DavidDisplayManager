@@ -3,21 +3,24 @@ CC = gcc
 CFLAGS = -Wall -Wextra -O2 -g
 LDFLAGS = -lX11 -lpthread
 
-# Source and output
+# Directories
 SRC_DIR = src
+BUILD_DIR = build
+
+# Files
 SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
-OBJ_FILES = $(SRC_FILES:.c=.o)
-BIN = david_display_manager
+BIN = $(BUILD_DIR)/david_display_manager
 
 # Default target
 all: $(BIN)
 
-# Build executable
+# Ensure build directory exists, then compile
 $(BIN): $(SRC_FILES)
+	mkdir -p $(BUILD_DIR)
 	$(CC) $(CFLAGS) $(SRC_FILES) -o $(BIN) $(LDFLAGS)
 
-# Clean object and binary files
+# Clean all build output
 clean:
-	rm -f $(BIN) $(SRC_DIR)/*.o
+	rm -rf $(BUILD_DIR)
 
 .PHONY: all clean
